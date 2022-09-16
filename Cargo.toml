@@ -1,0 +1,15 @@
+[package]
+name = "ntfy-types"
+version = "0.1.0"
+edition = "2021"
+authors = ["tomaThomas <tomathomas@mailbox.org>"]
+license = "MIT"
+description = "Types for the ntfy API"
+repository = "https://github.com/tomaThomas/ntfy-types"
+keywords = ["ntfy", "types", "json"]
+categories = ["api-bindings"]
+readme = "README.md"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
