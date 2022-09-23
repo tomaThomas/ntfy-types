@@ -194,6 +194,18 @@ impl From<u8> for NtfyPriority {
 #[serde(rename_all = "lowercase")]
 pub enum NtfyActionType {
     View,
+    Broadcast,
+    Http,
+}
+
+impl NtfyActionType {
+    pub fn value(&self) -> &'static str {
+        match self {
+            Self::View => "view",
+            Self::Broadcast => "broadcast",
+            Self::Http => "http",
+        }
+    }
 }
 
 impl Default for NtfyActionType {
