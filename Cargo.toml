@@ -1,6 +1,6 @@
 [package]
 name = "ntfy-types"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 authors = ["tomaThomas <tomathomas@mailbox.org>"]
 license = "MIT"

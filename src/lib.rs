@@ -18,21 +18,18 @@ pub struct NtfyMsg {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub click: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub action: Option<Vec<NtfyAction>>,
+    pub actions: Option<Vec<NtfyAction>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub delay: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub email: Option<String>,
 }
 
 impl NtfyMsg {
     pub fn new(topic: &str) -> NtfyMsg {
         NtfyMsg {
             topic: String::from(topic),
-            message: None,
-            title: None,
-            tags: None,
-            priority: None,
-            attach: None,
-            filename: None,
-            click: None,
-            action: None,
+            ..Default::default()
         }
     }
 
@@ -102,16 +99,26 @@ impl NtfyMsgBuilder {
     }
 
     pub fn actions(mut self, actions: Vec<NtfyAction>) -> NtfyMsgBuilder {
-        self.msg.action = Some(actions);
+        self.msg.actions = Some(actions);
         self
     }
 
     pub fn add_action(mut self, action: NtfyAction) -> NtfyMsgBuilder {
-        if self.msg.action.is_none() {
-            self.msg.action = Some(vec![action]);
+        if self.msg.actions.is_none() {
+            self.msg.actions = Some(vec![action]);
         } else {
-            self.msg.action.as_mut().unwrap().push(action);
+            self.msg.actions.as_mut().unwrap().push(action);
         }
+        self
+    }
+
+    pub fn delay(mut self, delay: &str) -> NtfyMsgBuilder {
+        self.msg.delay = Some(String::from(delay));
+        self
+    }
+
+    pub fn email(mut self, email: &str) -> NtfyMsgBuilder {
+        self.msg.email = Some(String::from(email));
         self
     }
 
