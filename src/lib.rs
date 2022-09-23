@@ -62,6 +62,11 @@ impl NtfyMsgBuilder {
         self
     }
 
+    pub fn title(mut self, title: &str) -> NtfyMsgBuilder {
+        self.msg.title = Some(String::from(title));
+        self
+    }
+
     pub fn tags(mut self, tags: Vec<String>) -> NtfyMsgBuilder {
         self.msg.tags = Some(tags);
         self
