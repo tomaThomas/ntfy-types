@@ -22,9 +22,9 @@ pub struct NtfyMsg {
 }
 
 impl NtfyMsg {
-    pub fn new(topic: String) -> NtfyMsg {
+    pub fn new(topic: &str) -> NtfyMsg {
         NtfyMsg {
-            topic,
+            topic: String::from(topic),
             message: None,
             title: None,
             tags: None,
@@ -36,7 +36,7 @@ impl NtfyMsg {
         }
     }
 
-    pub fn builder(topic: String) -> NtfyMsgBuilder {
+    pub fn builder(topic: &str) -> NtfyMsgBuilder {
         NtfyMsgBuilder::new(topic)
     }
 }
@@ -46,19 +46,19 @@ pub struct NtfyMsgBuilder {
 }
 
 impl NtfyMsgBuilder {
-    pub fn new(topic: String) -> NtfyMsgBuilder {
+    pub fn new(topic: &str) -> NtfyMsgBuilder {
         NtfyMsgBuilder {
             msg: NtfyMsg::new(topic),
         }
     }
 
-    pub fn topic(mut self, topic: String) -> NtfyMsgBuilder {
-        self.msg.topic = topic;
+    pub fn topic(mut self, topic: &str) -> NtfyMsgBuilder {
+        self.msg.topic = String::from(topic);
         self
     }
 
-    pub fn message(mut self, message: String) -> NtfyMsgBuilder {
-        self.msg.message = Some(message);
+    pub fn message(mut self, message: &str) -> NtfyMsgBuilder {
+        self.msg.message = Some(String::from(message));
         self
     }
 
@@ -67,11 +67,11 @@ impl NtfyMsgBuilder {
         self
     }
 
-    pub fn add_tag(mut self, tag: String) -> NtfyMsgBuilder {
+    pub fn add_tag(mut self, tag: &str) -> NtfyMsgBuilder {
         if self.msg.tags.is_none() {
-            self.msg.tags = Some(vec![tag]);
+            self.msg.tags = Some(vec![String::from(tag)]);
         } else {
-            self.msg.tags.as_mut().unwrap().push(tag);
+            self.msg.tags.as_mut().unwrap().push(String::from(tag));
         }
         self
     }
@@ -81,18 +81,18 @@ impl NtfyMsgBuilder {
         self
     }
 
-    pub fn attach(mut self, attach: String) -> NtfyMsgBuilder {
-        self.msg.attach = Some(attach);
+    pub fn attach(mut self, attach: &str) -> NtfyMsgBuilder {
+        self.msg.attach = Some(String::from(attach));
         self
     }
 
-    pub fn filename(mut self, filename: String) -> NtfyMsgBuilder {
-        self.msg.filename = Some(filename);
+    pub fn filename(mut self, filename: &str) -> NtfyMsgBuilder {
+        self.msg.filename = Some(String::from(filename));
         self
     }
 
-    pub fn click(mut self, click: String) -> NtfyMsgBuilder {
-        self.msg.click = Some(click);
+    pub fn click(mut self, click: &str) -> NtfyMsgBuilder {
+        self.msg.click = Some(String::from(click));
         self
     }
 
