@@ -21,6 +21,100 @@ pub struct NtfyMsg {
     pub action: Option<Vec<NtfyAction>>,
 }
 
+impl NtfyMsg {
+    pub fn new(topic: String) -> NtfyMsg {
+        NtfyMsg {
+            topic,
+            message: None,
+            title: None,
+            tags: None,
+            priority: None,
+            attach: None,
+            filename: None,
+            click: None,
+            action: None,
+        }
+    }
+
+    pub fn builder(topic: String) -> NtfyMsgBuilder {
+        NtfyMsgBuilder::new(topic)
+    }
+}
+
+pub struct NtfyMsgBuilder {
+    msg: NtfyMsg,
+}
+
+impl NtfyMsgBuilder {
+    pub fn new(topic: String) -> NtfyMsgBuilder {
+        NtfyMsgBuilder {
+            msg: NtfyMsg::new(topic),
+        }
+    }
+
+    pub fn topic(mut self, topic: String) -> NtfyMsgBuilder {
+        self.msg.topic = topic;
+        self
+    }
+
+    pub fn message(mut self, message: String) -> NtfyMsgBuilder {
+        self.msg.message = Some(message);
+        self
+    }
+
+    pub fn tags(mut self, tags: Vec<String>) -> NtfyMsgBuilder {
+        self.msg.tags = Some(tags);
+        self
+    }
+
+    pub fn add_tag(mut self, tag: String) -> NtfyMsgBuilder {
+        if self.msg.tags.is_none() {
+            self.msg.tags = Some(vec![tag]);
+        } else {
+            self.msg.tags.as_mut().unwrap().push(tag);
+        }
+        self
+    }
+
+    pub fn priority(mut self, priority: NtfyPriority) -> NtfyMsgBuilder {
+        self.msg.priority = Some(priority);
+        self
+    }
+
+    pub fn attach(mut self, attach: String) -> NtfyMsgBuilder {
+        self.msg.attach = Some(attach);
+        self
+    }
+
+    pub fn filename(mut self, filename: String) -> NtfyMsgBuilder {
+        self.msg.filename = Some(filename);
+        self
+    }
+
+    pub fn click(mut self, click: String) -> NtfyMsgBuilder {
+        self.msg.click = Some(click);
+        self
+    }
+
+    pub fn actions(mut self, actions: Vec<NtfyAction>) -> NtfyMsgBuilder {
+        self.msg.action = Some(actions);
+        self
+    }
+
+    pub fn add_action(mut self, action: NtfyAction) -> NtfyMsgBuilder {
+        if self.msg.action.is_none() {
+            self.msg.action = Some(vec![action]);
+        } else {
+            self.msg.action.as_mut().unwrap().push(action);
+        }
+        self
+    }
+
+    pub fn build(self) -> NtfyMsg {
+        self.msg
+    }
+}
+
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct NtfyAction {
     pub action: NtfyActionType,
@@ -28,6 +122,17 @@ pub struct NtfyAction {
     pub url: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub clear: Option<bool>,
+}
+
+impl NtfyAction {
+    pub fn new(label: String, url: String) -> NtfyAction {
+        NtfyAction {
+            action: NtfyActionType::View,
+            label,
+            url,
+            clear: None,
+        }
+    }
 }
 
 #[repr(u8)]
